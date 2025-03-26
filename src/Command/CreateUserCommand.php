@@ -41,6 +41,7 @@ class CreateUserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $arg1 = $input->getArgument('name');
+        $arg2 = $input->getArgument('email');
 
         if ($arg1) {
             $io->note(sprintf('You passed an argument: %s', $arg1));
@@ -54,6 +55,7 @@ class CreateUserCommand extends Command
             return Command::FAILURE;
         } else {
             $user = new User();
+            $user->setRoles(['ROLE_ADMIN']);
             $user->setName($input->getArgument('name'));
             $user->setEmail($input->getArgument('email'));
             $user->setPassword($this->hasher->hashPassword($user, $input->getArgument('password')));
